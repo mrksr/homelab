@@ -1,0 +1,3 @@
+[submodule "proxmoxery"]
+	path = proxmoxery
+	url = git@github.com:fnuecke/proxmoxery.git

@@ -1,0 +1,9 @@
+zfix_nodes:
+  hosts:
+    host.zfix.org:
+
+home_nodes:
+  hosts:
+    proxmox.internal:
+    proxmox-2.internal:
+    proxmox-4.internal:

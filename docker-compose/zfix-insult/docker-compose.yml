@@ -1,0 +1,8 @@
+services:
+  php:
+    image: php:8.2-apache
+    ports:
+      - 1726:80
+    volumes:
+      - /html:/var/www/html:ro
+    restart: unless-stopped

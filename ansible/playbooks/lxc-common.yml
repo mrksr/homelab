@@ -1,0 +1,5 @@
+- name: Add ping cronjob for Unifi
+  hosts:
+    - home_nodes
+  roles:
+    - unifi-ping-cronjob

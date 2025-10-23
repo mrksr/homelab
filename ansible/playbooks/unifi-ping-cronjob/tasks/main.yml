@@ -1,0 +1,4 @@
+- name: Ensure a job that regularly pings the current default router
+  ansible.builtin.cron:
+    name: "ping router"
+    job: "ping -c 1 $(ip route | awk '/default/ { print $3 }') > /dev/null"

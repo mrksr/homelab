@@ -1,5 +1,3 @@
----
-
 - name: Update Nodes
   hosts:
     - home_nodes

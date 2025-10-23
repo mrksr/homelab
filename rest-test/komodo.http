@@ -1,0 +1,34 @@
+# Playground for testing Komodo REST API calls.
+
+@KOMODO_URL = https://komodo.zfix.org
+@KOMODO_KEY = {{$dotenv KOMODO_KEY}}
+@KOMODO_SECRET = {{$dotenv KOMODO_SECRET}}
+
+###
+
+POST {{KOMODO_URL}}/execute
+Content-Type: application/json
+X-Api-Key: {{KOMODO_KEY}}
+X-Api-Secret: {{KOMODO_SECRET}}
+
+{
+    "type": "PullStack",
+    "params": {
+        "stack": "imog"
+    }
+}
+
+###
+
+
+POST {{KOMODO_URL}}/execute
+Content-Type: application/json
+X-Api-Key: {{KOMODO_KEY}}
+X-Api-Secret: {{KOMODO_SECRET}}
+
+{
+    "type": "DeployStack",
+    "params": {
+        "stack": "imog"
+    }
+}

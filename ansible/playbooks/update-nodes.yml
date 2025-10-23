@@ -5,37 +5,12 @@
     - home_nodes
     - zfix_nodes
     - usbip_rpi
-  tasks:
-    - name: Update and upgrade apt
-      become: true
-      ansible.builtin.apt:
-        upgrade: dist
-        update_cache: true
-        cache_valid_time: 86400
+  roles:
+    - apt
+
 - name: Ensure interactive environment
   hosts:
     - home_nodes
     - zfix_nodes
-  tasks:
-    - name: Add mise repo
-      ansible.builtin.deb822_repository:
-        name: mise
-        types: deb
-        uris: https://mise.jdx.dev/deb
-        suites: stable
-        components:
-          - main
-        signed_by: https://mise.jdx.dev/gpg-key.pub
-    - name: Install dependencies
-      become: true
-      ansible.builtin.apt:
-        update_cache: true
-        pkg:
-          - git
-          - zsh
-          - mise
-    - name: Setup and update chezmoi environment
-      ansible.builtin.shell: |
-        mise exec chezmoi -- chezmoi init mrksr
-        mise exec chezmoi -- chezmoi update
-      changed_when: true
+  roles:
+    - interactive-environment

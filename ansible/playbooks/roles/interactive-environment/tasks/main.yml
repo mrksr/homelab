@@ -1,0 +1,23 @@
+- name: Add mise repo
+  ansible.builtin.deb822_repository:
+    name: mise
+    types: deb
+    uris: https://mise.jdx.dev/deb
+    suites: stable
+    components:
+      - main
+    signed_by: https://mise.jdx.dev/gpg-key.pub
+- name: Install dependencies
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    pkg:
+      - git
+      - zsh
+      - mise
+- name: Setup and update chezmoi environment
+  ansible.builtin.shell: |
+    export GITHUB_TOKEN={{ github_token }}
+    mise exec chezmoi -- chezmoi init mrksr
+    mise exec chezmoi -- chezmoi update --force
+  changed_when: true

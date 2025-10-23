@@ -3,6 +3,7 @@ zfix_nodes:
     host.zfix.org:
   vars:
     ansible_user: root
+    ansible_port: 222
 
 home_nodes:
   hosts:

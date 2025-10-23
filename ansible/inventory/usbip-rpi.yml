@@ -1,0 +1,5 @@
+usbip_rpi:
+  hosts:
+    "10.31.101.12":
+  vars:
+    ansible_user: markus

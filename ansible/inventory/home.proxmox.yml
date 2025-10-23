@@ -1,7 +1,8 @@
 plugin: community.proxmox.proxmox
 url: https://proxmox.internal:8006
 validate_certs: false
-want_facts: true
+want_facts: false
+exclude_nodes: true
 user: ansible@pve
 token_id: ansible
 token_secret: !vault |
@@ -13,3 +14,8 @@ token_secret: !vault |
   39363063373134353462306637646331633938636665303637623330373234383931353632653366
   6466313134323339616162636231633762343635383139653035
 group_prefix: proxmox_home_
+compose:
+  # NOTE(mrksr): The nested quotes are critical here!
+  ansible_host: proxmox_node
+  ansible_connection: "'community.proxmox.proxmox_pct_remote'"
+  ansible_user: "'root'"

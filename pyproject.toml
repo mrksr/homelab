@@ -8,5 +8,6 @@ dependencies = [
     "ansible>=12.1.0",
     "ansible-dev-tools>=25.8.3",
     "ansible-lint>=25.9.2",
+    "paramiko>=4.0.0",
     "requests>=2.32.5",
 ]

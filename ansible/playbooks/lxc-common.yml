@@ -2,5 +2,6 @@
   hosts:
     - home_nodes
     - proxmox_home_all_lxc
+  gather_facts: false
   roles:
     - unifi-ping-cronjob

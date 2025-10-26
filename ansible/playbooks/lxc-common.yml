@@ -5,3 +5,11 @@
   gather_facts: false
   roles:
     - unifi-ping-cronjob
+
+- name: Limit journal size
+  hosts:
+    - proxmox_home_all_lxc
+    - proxmox_zfix_all_lxc
+  gather_facts: false
+  roles:
+    - limit-journal-size

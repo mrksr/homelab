@@ -1,0 +1,13 @@
+- name: Check if journald.conf exists
+  ansible.builtin.stat:
+    path: /etc/systemd/journald.conf
+  register: journald_conf
+
+- name: Set journald.conf max size
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/journald.conf
+    state: present
+    regexp: SystemMaxUse
+    line: "SystemMaxUse=128M"
+  when: journald_conf.stat.exists
+  notify: Restart journald

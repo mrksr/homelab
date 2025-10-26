@@ -1,7 +1,7 @@
 plugin: community.proxmox.proxmox
 url: https://proxmox.zfix:8006
 validate_certs: false
-want_facts: false
+want_facts: true
 exclude_nodes: true
 user: ansible@pve
 token_id: ansible
@@ -14,3 +14,11 @@ token_secret: !vault |
   33353661323066323766613836626263363162666666653833353132313430323466643039626164
   6263393363356535323034643834653061643063613938666635
 group_prefix: proxmox_zfix_
+filters:
+  - "'openwrt' not in (proxmox_tags_parsed|list)"
+compose:
+  # NOTE(mrksr): The nested quotes are critical here!
+  ansible_host: "'host.zfix.org'"
+  ansible_port: "'222'"
+  ansible_connection: "'community.proxmox.proxmox_pct_remote'"
+  ansible_user: "'root'"

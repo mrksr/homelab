@@ -1,10 +1,9 @@
-- name: Update Nodes
+- name: APT Dependencies
   hosts:
     - home_nodes
     - zfix_nodes
-    - usbip_rpi
   roles:
-    - apt
+    - proxmox-apt
 
 - name: Ensure interactive environment
   hosts:

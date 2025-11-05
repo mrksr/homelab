@@ -13,3 +13,12 @@
   gather_facts: false
   roles:
     - limit-journal-size
+
+- name: Interactive environments for some hosts
+  hosts:
+    - caddy
+    - caddy-zfix
+    - homer
+  gather_facts: false
+  roles:
+    - interactive-environment

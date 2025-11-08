@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=sh -c "ip -6 addr show | grep 'global dynamic' | awk '/inet6/ {print $2}' | grep '::' | sed 's/::.*/::\/64/' > /tmp/caddy-ipv6-prefixes"
+ExecStart=sh -c "mkdir -p /tmp/caddy-ipv6-prefixes; ip -6 addr show | grep 'global dynamic' | awk '/inet6/ {print $2}' | grep '::' | sed 's/::.*/::\/64/' > /tmp/caddy-ipv6-prefixes/ipv6"
 
 [Install]
 WantedBy=multi-user.target

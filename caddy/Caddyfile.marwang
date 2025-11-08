@@ -153,11 +153,6 @@ hassio.zfix.org hassio.h.zfix.org {
     }
 }
 
-immich.h.zfix.org {
-    import intranet
-    import simple immich.internal:2283
-}
-
 outline.h.zfix.org {
     redir https://outline.zfix.org
 }
@@ -201,7 +196,7 @@ proxmox.h.zfix.org {
         # to https://proxmox-4.internal:8006
 
         lb_policy ip_hash
-        lb_try_duration 1500ms
+        lb_try_duration 500ms
         lb_try_interval 250ms
 
         import tls_skip_verify

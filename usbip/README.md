@@ -1,5 +1,7 @@
 # USB/IP
 
+**DEPRECATED**: I no longer use USB/IP for remote Zigbee, I use `zigbee-socat` now.
+
 I run USB/IP on a Raspberry Pi to funnel my Zigbee antenna to Home Assistant running in the basement.
 Steps to get things set-up:
 

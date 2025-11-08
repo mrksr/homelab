@@ -1,0 +1,12 @@
+[Unit]
+Description=Socat device broadcast for %I
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/socat TCP4-LISTEN:1234,reuseaddr /dev/%I,b115200,raw,echo=0
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Update caddy IPv6 prefixes regularly
+
+[Timer]
+OnBootSec=10s
+OnUnitActiveSec=1m
+
+[Install]
+WantedBy=timers.target

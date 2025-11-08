@@ -1,0 +1,13 @@
+[Unit]
+Description=Serve the caddy-ipv6-prefixes file for local consumption
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python -m http.server -b 127.0.0.1 -d /tmp/caddy-ipv6-prefixes 6389
+Restart=always
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target

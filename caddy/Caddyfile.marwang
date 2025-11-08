@@ -1,0 +1,239 @@
+{
+    # debug
+}
+
+(tls_config) {
+    tls {
+        dns ovh {
+            endpoint ovh-eu
+            application_key {env.OVH_APPLICATION_KEY}
+            application_secret {env.OVH_APPLICATION_SECRET}
+            consumer_key {env.OVH_CONSUMER_KEY}
+        }
+    }
+
+    header {
+        # enable HSTS, one week expiry
+        Strict-Transport-Security max-age=604800;
+    }
+}
+
+(tls_skip_verify) {
+    transport http {
+        tls_insecure_skip_verify
+    }
+}
+
+(vouch_auth) {
+    forward_auth http://vouch.zfix:9090 {
+        uri /validate
+
+        @needauth status 401
+        handle_response @needauth {
+            redir https://vouch.zfix.org/login?url={scheme}://{host}{uri}&vouch-failcount={rp.header.X-Vouch-Failcount}&X-Vouch-Token={rp.header.X-Vouch-Token}&error={rp.header.X-Vouch-Error} 302
+        }
+    }
+}
+
+(intranet) {
+    @is_outside not dynamic_client_ip combine {
+        static private_ranges fe80::/10 100.64.0.0/10
+        list {
+            # Consumes the prefixes created by caddy-ipv6-prefixes.service
+            url http://localhost:6389/ipv6
+            interval 10s
+            timeout 1s
+            retries 2
+        }
+    }
+
+    handle @is_outside {
+        import vouch_auth
+    }
+}
+
+(default) {
+    import tls_config
+
+    handle_errors {
+        header Content-Type text/html
+        respond <<HTML
+            <html lang="en">
+                <head>
+                    <title>{err.status_code}: {err.status_text}</title>
+                </head>
+                <body>
+                    <h1>{err.status_code}: {err.status_text}</h1>
+                    <p>{err.message}</p>
+                </body>
+            </html>
+        HTML {err.status_code}
+    }
+}
+
+(default_proxy_settings) {
+    # Allow multiple upstream retries
+    lb_retries 3
+    lb_try_duration 5s
+
+    # Keep pinging upstreams
+    # health_uri /
+    # health_interval 10s
+    # health_fails 2
+    # health_follow_redirects
+}
+
+(simple) {
+    import default
+
+    reverse_proxy http://{args[0]} {
+        import default_proxy_settings
+    }
+}
+
+(simple_https) {
+    import default
+
+    reverse_proxy https://{args[0]} {
+        import tls_skip_verify
+        import default_proxy_settings
+    }
+}
+
+asus.h.zfix.org {
+    import intranet
+    import simple asus-office-webui.internal
+}
+
+backup.h.zfix.org {
+    import simple_https pbs.internal:8007
+}
+
+budget.h.zfix.org {
+    import intranet
+    import simple_https actualbudget.internal:5006
+}
+
+dns.h.zfix.org {
+    import intranet
+    import simple adguard.internal
+}
+
+dns-proxy.h.zfix.org {
+    import intranet
+    import simple adguard-proxy.internal
+}
+
+dockge.h.zfix.org {
+    import intranet
+    import simple dockge.internal:5001
+}
+
+evcc.h.zfix.org {
+    import intranet
+    import simple evcc.internal:7070
+}
+
+grafana.h.zfix.org {
+    import intranet
+    import simple grafana.internal:3000
+}
+
+# NOTE(mrksr): Also serve for hassio.zfix.org for intranet DNS rewrite
+hassio.zfix.org hassio.h.zfix.org {
+    import default
+
+    reverse_proxy {
+        # NOTE(mrksr): Use IPv4 only due to trusted proxy list in hassio
+        dynamic a homeassistant.internal 8123 {
+            versions ipv4
+        }
+
+        import default_proxy_settings
+    }
+}
+
+immich.h.zfix.org {
+    import intranet
+    import simple immich.internal:2283
+}
+
+outline.h.zfix.org {
+    redir https://outline.zfix.org
+}
+
+lidarr.h.zfix.org {
+    import intranet
+    import simple lidarr.internal:8686
+}
+
+lounge.h.zfix.org {
+    import intranet
+    import simple the-lounge.internal:9000
+}
+
+music-assistant.h.zfix.org {
+    import intranet
+    import simple homeassistant.internal:8095
+}
+
+nas.h.zfix.org {
+    import simple_https zfix-nas.internal:5001
+}
+
+prometheus.h.zfix.org {
+    import intranet
+    import simple prometheus.internal:9090
+}
+
+prowlarr.h.zfix.org {
+    import intranet
+    import simple prowlarr.internal:9696
+}
+
+proxmox.h.zfix.org {
+    import intranet
+    import default
+
+    reverse_proxy * {
+        # to https://proxmox-1.internal:8006
+        to https://proxmox-2.internal:8006
+        # to https://proxmox-4.internal:8006
+
+        lb_policy ip_hash
+        lb_try_duration 1500ms
+        lb_try_interval 250ms
+
+        import tls_skip_verify
+    }
+}
+
+radarr.h.zfix.org {
+    import intranet
+    import simple radarr.internal:7878
+}
+
+sonarr.h.zfix.org {
+    import intranet
+    import simple sonarr.internal:8989
+}
+
+torrent.h.zfix.org {
+    import intranet
+    import simple qbittorrent.internal:8090
+}
+
+ui.h.zfix.org {
+    import intranet
+    import simple_https 10.31.1.1:443
+}
+
+wantflix.h.zfix.org {
+    import intranet
+    import simple jellyseerr.internal:5055
+}
+
+zetflix.h.zfix.org {
+    import intranet
+    import simple jellyfin.internal:8096
+}

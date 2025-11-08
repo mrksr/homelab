@@ -1,0 +1,392 @@
+{
+    # debug
+
+    layer4 {
+        :22 {
+            route {
+                proxy forgejo.zfix:22
+            }
+        }
+
+        :25 {
+            route {
+                proxy {
+                    proxy_protocol v1
+                    upstream mailcow.internal:10025
+                }
+            }
+        }
+
+        :110 {
+            route {
+                proxy {
+                    proxy_protocol v1
+                    upstream mailcow.internal:10110
+                }
+            }
+        }
+
+        :143 {
+            route {
+                proxy {
+                    proxy_protocol v1
+                    upstream mailcow.internal:10143
+                }
+            }
+        }
+
+        :465 {
+            route {
+                proxy {
+                    proxy_protocol v1
+                    upstream mailcow.internal:10465
+                }
+            }
+        }
+
+        :587 {
+            route {
+                proxy {
+                    proxy_protocol v1
+                    upstream mailcow.internal:10587
+                }
+            }
+        }
+
+        :993 {
+            route {
+                proxy {
+                    proxy_protocol v1
+                    upstream mailcow.internal:10993
+                }
+            }
+        }
+
+        :995 {
+            route {
+                proxy {
+                    proxy_protocol v1
+                    upstream mailcow.internal:10995
+                }
+            }
+        }
+
+        :3478 {
+            route {
+                proxy headscale.zfix:3478
+            }
+        }
+
+        :4190 {
+            route {
+                proxy {
+                    proxy_protocol v1
+                    upstream mailcow.internal:14190
+                }
+            }
+        }
+
+        :6690 {
+            route {
+                proxy zfix-nas.internal:6690
+            }
+        }
+    }
+}
+
+(tls_config) {
+    tls {
+        dns ovh {
+            endpoint ovh-eu
+            application_key {env.OVH_APPLICATION_KEY}
+            application_secret {env.OVH_APPLICATION_SECRET}
+            consumer_key {env.OVH_CONSUMER_KEY}
+        }
+    }
+
+    header {
+        # enable HSTS, one week expiry
+        Strict-Transport-Security max-age=604800;
+    }
+}
+
+(tls_skip_verify) {
+    transport http {
+        tls_insecure_skip_verify
+    }
+}
+
+(vouch_auth) {
+    forward_auth http://vouch.zfix:9090 {
+        uri /validate
+
+        @needauth status 401
+        handle_response @needauth {
+            redir https://vouch.zfix.org/login?url={scheme}://{host}{uri}&vouch-failcount={rp.header.X-Vouch-Failcount}&X-Vouch-Token={rp.header.X-Vouch-Token}&error={rp.header.X-Vouch-Error} 302
+        }
+    }
+}
+
+(default) {
+    import tls_config
+
+    handle_errors {
+        header Content-Type text/html
+        respond <<HTML
+            <html lang="en">
+                <head>
+                    <title>{err.status_code}: {err.status_text}</title>
+                </head>
+                <body>
+                    <h1>{err.status_code}: {err.status_text}</h1>
+                    <p>{err.message}</p>
+                </body>
+            </html>
+        HTML {err.status_code}
+    }
+}
+
+(default_proxy_settings) {
+    # Allow multiple upstream retries
+    lb_retries 3
+    lb_try_duration 5s
+
+    # Keep pinging upstreams
+    # health_uri /
+    # health_interval 10s
+    # health_fails 2
+    # health_follow_redirects
+}
+
+(simple) {
+    import default
+
+    reverse_proxy http://{args[0]} {
+        import default_proxy_settings
+    }
+}
+
+(simple_https) {
+    import default
+
+    reverse_proxy https://{args[0]} {
+        import tls_skip_verify
+        import default_proxy_settings
+    }
+}
+
+audio.zfix.org {
+    import simple audiobookshelf.internal:13378
+}
+
+books.zfix.org {
+    import simple booklore.internal:6060
+}
+
+dash.zfix.org {
+    import vouch_auth
+    import simple homer.internal:8010
+}
+
+dockge.zfix.org {
+    import vouch_auth
+    import simple komodo.zfix:5001
+}
+
+git.zfix.org {
+    import simple forgejo.zfix:3000
+}
+
+grist.zfix.org {
+    import simple grist.internal:8484
+}
+
+hassio.zfix.org hassio.h.zfix.org {
+    import default
+
+    reverse_proxy {
+        # NOTE(mrksr): Use IPv4 only due to trusted proxy list in hassio
+        dynamic a homeassistant.internal 8123 {
+            versions ipv4
+        }
+
+        import default_proxy_settings
+    }
+}
+
+headscale.zfix.org tailscale.zfix.org {
+    import simple headscale.zfix:8080
+
+    handle / {
+        header Content-Type text/html
+        respond <<HTML
+            <html><body>
+            <h1>zfix.org Tailscale VPN</h1>
+            <p>Connect via a Tailscale client. See the <a href="https://dash.zfix.org">zfix.org Dashboard</a> for details.</p>
+            </body></html>
+        HTML 200
+    }
+
+}
+
+immich.zfix.org {
+    import simple immich.internal:2283
+}
+
+imog.zfix.org {
+    import simple komodo.zfix:9721
+}
+
+karakeep.zfix.org {
+    import simple karakeep.zfix:3000
+}
+
+keycloak.zfix.org {
+    import simple keycloak.zfix:8080
+
+    redir / /realms/zfix/account
+}
+
+komodo.zfix.org {
+    import simple komodo.zfix:9120
+}
+
+mail.zfix.org mail.mrksr.de mail.drksr.de autodiscover.zfix.org autoconfig.zfix.org autodiscover.mrksr.de autoconfig.mrksr.de autodiscover.drksr.de autoconfig.drksr.de {
+    import simple_https mailcow.internal:443
+}
+
+mas.zfix.org {
+    import simple komodo.zfix:8080
+}
+
+n8n.zfix.org {
+    import vouch_auth
+    import simple n8n.internal:5678
+}
+
+nas.zfix.org {
+    import simple_https zfix-nas.internal:5001
+}
+
+nas-dav.zfix.org {
+    import simple_https zfix-nas.internal:5006
+}
+
+ntfy.zfix.org {
+    import simple ntfy.internal:80
+}
+
+outline.zfix.org {
+    import simple outline.internal:3000
+}
+
+paperless.zfix.org {
+    import simple paperless.internal:8000
+}
+
+paperless-ai.zfix.org {
+    import simple paperless-ai.internal:3000
+}
+
+photos.zfix.org {
+    import simple_https zfix-nas.internal:5443
+}
+
+proxmox.zfix.org {
+    import vouch_auth
+    import simple_https 10.1.0.1:8006
+}
+
+router.zfix.org {
+    import vouch_auth
+    import simple_https 10.10.1.1:443
+}
+
+status.zfix.org {
+    import vouch_auth
+    import simple pulse.zfix:7655
+}
+
+tandoor.zfix.org {
+    import simple tandoor.zfix:8002
+}
+
+vouch.zfix.org {
+    import simple vouch.zfix:9090
+}
+
+vouch-dockge.zfix.org {
+    import vouch_auth
+    import simple vouch.zfix:5001
+}
+
+wantflix.zfix.org {
+    import simple jellyseerr.internal:5055
+}
+
+zfix.org mrksr.de drksr.de {
+    import default
+
+    handle {
+        reverse_proxy http://komodo.zfix:1726 {
+            import default_proxy_settings
+        }
+    }
+
+    handle /defaultsite {
+        # Fix for ourpc.de by Markus Schlaffer
+        redir https://zfix.org
+    }
+
+    handle /_synapse/* {
+        reverse_proxy http://komodo.zfix:8008 {
+            import default_proxy_settings
+        }
+    }
+
+    handle /_matrix/* {
+        reverse_proxy http://komodo.zfix:8008 {
+            import default_proxy_settings
+        }
+    }
+
+    handle /.well-known/matrix/* {
+        reverse_proxy http://komodo.zfix:8008 {
+            import default_proxy_settings
+        }
+    }
+
+    handle /_matrix/client/unstable/org.matrix.msc3575/sync {
+        reverse_proxy http://komodo.zfix:8881 {
+            import default_proxy_settings
+        }
+    }
+
+    handle /client/* {
+        reverse_proxy http://komodo.zfix:8881 {
+            import default_proxy_settings
+        }
+    }
+
+    handle /.well-known/openid-configuration {
+        reverse_proxy http://keycloak.zfix:8080 {
+            rewrite /realms/zfix/.well-known/openid-configuration
+            import default_proxy_settings
+        }
+    }
+
+    @matrix_legacy_client path_regexp ^/_matrix/client/(.*)/(login|logout|refresh)
+    handle @matrix_legacy_client {
+        reverse_proxy http://komodo.zfix:8080 {
+            import default_proxy_settings
+        }
+    }
+}
+
+zflx.org zetflix.zfix.org {
+    import simple jellyfin.internal:8096
+
+    header {
+        X-important-info "Wer das liest ist doof."
+    }
+}

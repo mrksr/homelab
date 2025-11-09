@@ -120,7 +120,7 @@
     forward_auth http://oauth2-proxy.zfix:4180 {
         uri /oauth2/auth
 
-        copy_headers X-Auth-Request-User X-Auth-Request-Email
+        copy_headers X-Auth-Request-User X-Auth-Request-Email X-Auth-Request-Preferred-Username X-Auth-Request-Groups
 
         # If oauth2-proxy returns a 401 status, redirect the client to the sign-in page.
         @error status 401
@@ -310,8 +310,14 @@ router.zfix.org {
 }
 
 status.zfix.org {
+    import default
     import auth_proxy
-    import simple pulse.zfix:7655
+
+    reverse_proxy http://pulse.zfix:7655 {
+        import default_proxy_settings
+
+        header_up X-Proxy-Secret {env.PULSE_PROXY_SECRET}
+    }
 }
 
 tandoor.zfix.org {

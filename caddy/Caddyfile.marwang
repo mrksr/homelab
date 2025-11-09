@@ -40,7 +40,7 @@
 
 (intranet) {
     @is_outside not dynamic_client_ip combine {
-        static private_ranges fe80::/10 100.64.0.0/10
+        static private_ranges fc00::/7 fe80::/10 100.64.0.0/10
         list {
             # Consumes the prefixes created by caddy-ipv6-prefixes.service
             url http://localhost:6389/ipv6

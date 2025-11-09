@@ -24,13 +24,16 @@
     }
 }
 
-(vouch_auth) {
-    forward_auth http://vouch.zfix:9090 {
-        uri /validate
+(auth_proxy) {
+    forward_auth http://oauth2-proxy.zfix:4180 {
+        uri /oauth2/auth
 
-        @needauth status 401
-        handle_response @needauth {
-            redir https://vouch.zfix.org/login?url={scheme}://{host}{uri}&vouch-failcount={rp.header.X-Vouch-Failcount}&X-Vouch-Token={rp.header.X-Vouch-Token}&error={rp.header.X-Vouch-Error} 302
+        copy_headers X-Auth-Request-User X-Auth-Request-Email
+
+        # If oauth2-proxy returns a 401 status, redirect the client to the sign-in page.
+        @error status 401
+        handle_response @error {
+            redir * https://auth-proxy.zfix.org/oauth2/sign?rd={scheme}://{host}{uri}
         }
     }
 }
@@ -48,7 +51,7 @@
     }
 
     handle @is_outside {
-        import vouch_auth
+        import auth_proxy
     }
 }
 

@@ -195,17 +195,8 @@ dash.zfix.org {
     import simple homer.internal:8010
 }
 
-dockge.zfix.org {
-    import auth_proxy
-    import simple komodo.zfix:5001
-}
-
 git.zfix.org {
     import simple forgejo.zfix:3000
-}
-
-grist.zfix.org {
-    import simple grist.internal:8484
 }
 
 hassio.zfix.org hassio.h.zfix.org {
@@ -264,11 +255,6 @@ mail.zfix.org mail.mrksr.de mail.drksr.de autodiscover.zfix.org autoconfig.zfix.
 
 mas.zfix.org {
     import simple komodo.zfix:8080
-}
-
-n8n.zfix.org {
-    import auth_proxy
-    import simple n8n.internal:5678
 }
 
 nas.zfix.org {

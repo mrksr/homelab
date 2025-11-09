@@ -28,7 +28,7 @@
     forward_auth http://oauth2-proxy.zfix:4180 {
         uri /oauth2/auth
 
-        copy_headers X-Auth-Request-User X-Auth-Request-Email
+        copy_headers X-Auth-Request-User X-Auth-Request-Email X-Auth-Request-Preferred-Username X-Auth-Request-Groups
 
         # If oauth2-proxy returns a 401 status, redirect the client to the sign-in page.
         @error status 401

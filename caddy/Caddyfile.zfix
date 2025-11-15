@@ -213,7 +213,21 @@ hassio.zfix.org hassio.h.zfix.org {
 }
 
 headscale.zfix.org tailscale.zfix.org {
-    import simple headscale.zfix:8080
+    import default
+
+    handle {
+        reverse_proxy headscale.zfix:80 {
+            import default_proxy_settings
+        }
+    }
+
+    handle /admin/* {
+        import auth_proxy
+
+        reverse_proxy headscale.zfix:80 {
+            import default_proxy_settings
+        }
+    }
 
     handle / {
         header Content-Type text/html
@@ -250,7 +264,19 @@ komodo.zfix.org {
 }
 
 mail.zfix.org mail.mrksr.de mail.drksr.de autodiscover.zfix.org autoconfig.zfix.org autodiscover.mrksr.de autoconfig.mrksr.de autodiscover.drksr.de autoconfig.drksr.de {
-    import simple_https mailcow.internal:443
+    import default
+
+    # NOTE(mrksr): Include a few settings to hopefully make Exchange more robust?
+    request_body {
+        max_size 128MB
+    }
+
+    reverse_proxy https://mailcow.internal:443 {
+        import tls_skip_verify
+        import default_proxy_settings
+
+        flush_interval -1
+    }
 }
 
 mas.zfix.org {

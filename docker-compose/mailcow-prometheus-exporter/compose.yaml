@@ -1,0 +1,10 @@
+services:
+  prometheus-exporter:
+    image: ghcr.io/mailcow/prometheus-exporter:2
+    restart: unless-stopped
+    environment:
+      - MAILCOW_EXPORTER_HOST
+      - MAILCOW_EXPORTER_API_KEY
+      - MAILCOW_EXPORTER_SECURITY_TOKEN
+    ports:
+      - 9099:9099

@@ -179,6 +179,11 @@ nas.h.zfix.org {
     import simple_https zfix-nas.internal:5001
 }
 
+netvisor.h.zfix.org {
+    import intranet
+    import simple netvisor.internal:60072
+}
+
 prometheus.h.zfix.org {
     import intranet
     import simple prometheus.internal:9090

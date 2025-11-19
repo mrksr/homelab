@@ -1,0 +1,15 @@
+services:
+  github-mirror:
+    image: alpine
+    restart: unless-stopped
+    environment:
+      - GITHUB_TOKEN
+      - ACCESS_TOKEN
+      - GITEA_URL
+    command: >
+      sh -c 'apk add curl bash jq; while true; do
+        curl -o mirror -fsLS "https://raw.githubusercontent.com/maxkratz/github2gitea-mirror/master/github2gitea-mirror" ;
+        bash mirror --mode user --user mrksr ;
+        bash mirror --mode star --user mrksr --org mrksr-stars ;
+        sleep 4h;
+      done; '

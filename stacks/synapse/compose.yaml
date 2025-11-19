@@ -1,0 +1,124 @@
+volumes:
+  synapse_data: {}
+  synapse_config: {}
+  mas_data: {}
+  mas_postgres_data: {}
+  slidingsync_postgres_data: {}
+  postgres_data: {}
+  whatsapp_data: {}
+  signal_bridge_data: {}
+  signal_postgres_data: {}
+
+services:
+  synapse:
+    image: docker.io/matrixdotorg/synapse:latest
+    container_name: matrix
+    restart: unless-stopped
+    environment:
+      - UID=0
+      - SYNAPSE_SERVER_NAME=zfix.org
+      - SYNAPSE_REPORT_STATS=no
+      - SYNAPSE_CONFIG_DIR=/config
+    volumes:
+      - synapse_data:/data
+      - synapse_config:/config
+      - whatsapp_data:/bridges/whatsapp:ro
+      - signal_bridge_data:/bridges/signal:ro
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    ports:
+      - 8008:8008/tcp
+    networks:
+      - synapse
+  slidingsync:
+    image: ghcr.io/matrix-org/sliding-sync:latest
+    networks:
+      - synapse
+    restart: unless-stopped
+    depends_on:
+      - slidingsync_postgres
+    ports:
+      - 8881:8881
+    environment:
+      - SYNCV3_SECRET
+      - SYNCV3_SERVER=http://matrix:8008
+      - SYNCV3_DB=user=postgres dbname=postgres sslmode=disable host=slidingsync_postgres password=postgres
+      - SYNCV3_BINDADDR=0.0.0.0:8881
+  matrix_authentication_service:
+    image: ghcr.io/element-hq/matrix-authentication-service:latest
+    restart: unless-stopped
+    networks:
+      - synapse
+    depends_on:
+      - mas_postgres
+    ports:
+      - 8080:8080
+    environment:
+      - MAS_CONFIG=/data/config.yml
+    volumes:
+      - mas_data:/data
+      - synapse_config:/synapse_config:ro
+  mas_postgres:
+    image: docker.io/postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - mas_postgres_data:/var/lib/postgresql/data
+    networks:
+      - synapse
+  slidingsync_postgres:
+    image: docker.io/postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - slidingsync_postgres_data:/var/lib/postgresql/data
+    networks:
+      - synapse
+  postgres:
+    image: docker.io/postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - synapse
+  whatsapp:
+    image: dock.mau.dev/mautrix/whatsapp
+    restart: unless-stopped
+    links:
+      - synapse
+    volumes:
+      - whatsapp_data:/data
+    networks:
+      - synapse
+  signal:
+    image: dock.mau.dev/mautrix/signal
+    restart: unless-stopped
+    links:
+      - synapse
+      - signal_postgres
+    volumes:
+      - signal_bridge_data:/data
+    networks:
+      - synapse
+  signal_postgres:
+    image: postgres:13-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DATABASE: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - signal_postgres_data:/var/lib/postgresql/data
+    networks:
+      - synapse
+networks:
+  synapse: {}

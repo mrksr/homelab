@@ -71,12 +71,6 @@
             }
         }
 
-        :3478 {
-            route {
-                proxy headscale.zfix:3478
-            }
-        }
-
         :4190 {
             route {
                 proxy {
@@ -216,14 +210,6 @@ headscale.zfix.org tailscale.zfix.org {
     import default
 
     handle {
-        reverse_proxy headscale.zfix:80 {
-            import default_proxy_settings
-        }
-    }
-
-    handle /admin/* {
-        import auth_proxy
-
         reverse_proxy headscale.zfix:80 {
             import default_proxy_settings
         }

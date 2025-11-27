@@ -346,6 +346,19 @@ zfix.org mrksr.de drksr.de {
         }
     }
 
+    @matrix_legacy_client path_regexp ^/_matrix/client/(.*)/(login|logout|refresh)
+    handle @matrix_legacy_client {
+        reverse_proxy http://komodo.zfix:8080 {
+            import default_proxy_settings
+        }
+    }
+
+    handle /_matrix/client/unstable/org.matrix.msc3575/sync {
+        reverse_proxy http://komodo.zfix:8881 {
+            import default_proxy_settings
+        }
+    }
+
     handle /_matrix/* {
         reverse_proxy http://komodo.zfix:8008 {
             import default_proxy_settings
@@ -354,12 +367,6 @@ zfix.org mrksr.de drksr.de {
 
     handle /.well-known/matrix/* {
         reverse_proxy http://komodo.zfix:8008 {
-            import default_proxy_settings
-        }
-    }
-
-    handle /_matrix/client/unstable/org.matrix.msc3575/sync {
-        reverse_proxy http://komodo.zfix:8881 {
             import default_proxy_settings
         }
     }
@@ -373,13 +380,6 @@ zfix.org mrksr.de drksr.de {
     handle /.well-known/openid-configuration {
         reverse_proxy http://keycloak.zfix:8080 {
             rewrite /realms/zfix/.well-known/openid-configuration
-            import default_proxy_settings
-        }
-    }
-
-    @matrix_legacy_client path_regexp ^/_matrix/client/(.*)/(login|logout|refresh)
-    handle @matrix_legacy_client {
-        reverse_proxy http://komodo.zfix:8080 {
             import default_proxy_settings
         }
     }

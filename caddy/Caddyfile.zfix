@@ -383,6 +383,14 @@ zfix.org mrksr.de drksr.de {
             import default_proxy_settings
         }
     }
+
+    handle /.well-known/caldav {
+        redir https://mail.zfix.org/SOGo/dav/
+    }
+
+    handle /.well-known/carddav {
+        redir https://mail.zfix.org/SOGo/dav/
+    }
 }
 
 zflx.org zetflix.zfix.org {

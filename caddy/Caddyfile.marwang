@@ -119,12 +119,12 @@ budget.h.zfix.org {
 
 dns.h.zfix.org {
     import intranet
-    import simple adguard.internal
+    import simple dns.internal
 }
 
 dns-proxy.h.zfix.org {
     import intranet
-    import simple adguard-proxy.internal
+    import simple dns-proxy.internal
 }
 
 dockge.h.zfix.org {
@@ -214,6 +214,11 @@ proxmox.h.zfix.org {
 radarr.h.zfix.org {
     import intranet
     import simple radarr.internal:7878
+}
+
+searxng.h.zfix.org {
+    import intranet
+    import simple searxng.internal:8888
 }
 
 sonarr.h.zfix.org {

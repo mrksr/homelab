@@ -1,66 +1,66 @@
 {
-    # debug
+	# debug
 }
 
 (tls_config) {
-    tls {
-        dns ovh {
-            endpoint ovh-eu
-            application_key {env.OVH_APPLICATION_KEY}
-            application_secret {env.OVH_APPLICATION_SECRET}
-            consumer_key {env.OVH_CONSUMER_KEY}
-        }
-    }
+	tls {
+		dns ovh {
+			endpoint ovh-eu
+			application_key {env.OVH_APPLICATION_KEY}
+			application_secret {env.OVH_APPLICATION_SECRET}
+			consumer_key {env.OVH_CONSUMER_KEY}
+		}
+	}
 
-    header {
-        # enable HSTS, one week expiry
-        Strict-Transport-Security max-age=604800;
-    }
+	header {
+		# enable HSTS, one week expiry
+		Strict-Transport-Security max-age=604800;
+	}
 }
 
 (tls_skip_verify) {
-    transport http {
-        tls_insecure_skip_verify
-    }
+	transport http {
+		tls_insecure_skip_verify
+	}
 }
 
 (auth_proxy) {
-    forward_auth http://oauth2-proxy.zfix:4180 {
-        uri /oauth2/auth
+	forward_auth http://oauth2-proxy.zfix:4180 {
+		uri /oauth2/auth
 
-        copy_headers X-Auth-Request-User X-Auth-Request-Email X-Auth-Request-Preferred-Username X-Auth-Request-Groups
+		copy_headers X-Auth-Request-User X-Auth-Request-Email X-Auth-Request-Preferred-Username X-Auth-Request-Groups
 
-        # If oauth2-proxy returns a 401 status, redirect the client to the sign-in page.
-        @error status 401
-        handle_response @error {
-            redir * https://auth-proxy.zfix.org/oauth2/sign?rd={scheme}://{host}{uri}
-        }
-    }
+		# If oauth2-proxy returns a 401 status, redirect the client to the sign-in page.
+		@error status 401
+		handle_response @error {
+			redir * https://auth-proxy.zfix.org/oauth2/sign?rd={scheme}://{host}{uri}
+		}
+	}
 }
 
 (intranet) {
-    @is_outside not dynamic_client_ip combine {
-        static private_ranges fc00::/7 fe80::/10 100.64.0.0/10
-        list {
-            # Consumes the prefixes created by caddy-ipv6-prefixes.service
-            url http://localhost:6389/ipv6
-            interval 10s
-            timeout 1s
-            retries 2
-        }
-    }
+	@is_outside not dynamic_client_ip combine {
+		static private_ranges fc00::/7 fe80::/10 100.64.0.0/10
+		list {
+			# Consumes the prefixes created by caddy-ipv6-prefixes.service
+			url http://localhost:6389/ipv6
+			interval 10s
+			timeout 1s
+			retries 2
+		}
+	}
 
-    handle @is_outside {
-        import auth_proxy
-    }
+	handle @is_outside {
+		import auth_proxy
+	}
 }
 
 (default) {
-    import tls_config
+	import tls_config
 
-    handle_errors {
-        header Content-Type text/html
-        respond <<HTML
+	handle_errors {
+		header Content-Type text/html
+		respond <<HTML
             <html lang="en">
                 <head>
                     <title>{err.status_code}: {err.status_text}</title>
@@ -71,177 +71,177 @@
                 </body>
             </html>
         HTML {err.status_code}
-    }
+	}
 }
 
 (default_proxy_settings) {
-    # Allow multiple upstream retries
-    lb_retries 3
-    lb_try_duration 5s
+	# Allow multiple upstream retries
+	lb_retries 3
+	lb_try_duration 5s
 
-    # Keep pinging upstreams
-    # health_uri /
-    # health_interval 10s
-    # health_fails 2
-    # health_follow_redirects
+	# Keep pinging upstreams
+	# health_uri /
+	# health_interval 10s
+	# health_fails 2
+	# health_follow_redirects
 }
 
 (simple) {
-    import default
+	import default
 
-    reverse_proxy http://{args[0]} {
-        import default_proxy_settings
-    }
+	reverse_proxy http://{args[0]} {
+		import default_proxy_settings
+	}
 }
 
 (simple_https) {
-    import default
+	import default
 
-    reverse_proxy https://{args[0]} {
-        import tls_skip_verify
-        import default_proxy_settings
-    }
+	reverse_proxy https://{args[0]} {
+		import tls_skip_verify
+		import default_proxy_settings
+	}
 }
 
 asus.h.zfix.org {
-    import intranet
-    import simple asus-office-webui.internal
+	import intranet
+	import simple asus-office-webui.internal
 }
 
 backup.h.zfix.org {
-    import simple_https pbs.internal:8007
+	import simple_https pbs.internal:8007
 }
 
 budget.h.zfix.org {
-    import intranet
-    import simple_https actualbudget.internal:5006
+	import intranet
+	import simple_https actualbudget.internal:5006
 }
 
 dns.h.zfix.org {
-    import intranet
-    import simple dns.internal
+	import intranet
+	import simple dns.internal
 }
 
 dns-proxy.h.zfix.org {
-    import intranet
-    import simple dns-proxy.internal
+	import intranet
+	import simple dns-proxy.internal
 }
 
 dockge.h.zfix.org {
-    import intranet
-    import simple dockge.internal:5001
+	import intranet
+	import simple dockge.internal:5001
 }
 
 evcc.h.zfix.org {
-    import intranet
-    import simple evcc.internal:7070
+	import intranet
+	import simple evcc.internal:7070
 }
 
 grafana.h.zfix.org {
-    import intranet
-    import simple grafana.internal:3000
+	import intranet
+	import simple grafana.internal:3000
 }
 
 # NOTE(mrksr): Also serve for hassio.zfix.org for intranet DNS rewrite
 hassio.zfix.org hassio.h.zfix.org {
-    import default
+	import default
 
-    reverse_proxy {
-        # NOTE(mrksr): Use IPv4 only due to trusted proxy list in hassio
-        dynamic a homeassistant.internal 8123 {
-            versions ipv4
-        }
+	reverse_proxy {
+		# NOTE(mrksr): Use IPv4 only due to trusted proxy list in hassio
+		dynamic a homeassistant.internal 8123 {
+			versions ipv4
+		}
 
-        import default_proxy_settings
-    }
+		import default_proxy_settings
+	}
 }
 
 outline.h.zfix.org {
-    redir https://outline.zfix.org
+	redir https://outline.zfix.org
 }
 
 lidarr.h.zfix.org {
-    import intranet
-    import simple lidarr.internal:8686
+	import intranet
+	import simple lidarr.internal:8686
 }
 
 lounge.h.zfix.org {
-    import intranet
-    import simple the-lounge.internal:9000
+	import intranet
+	import simple the-lounge.internal:9000
 }
 
 music-assistant.h.zfix.org {
-    import intranet
-    import simple homeassistant.internal:8095
+	import intranet
+	import simple homeassistant.internal:8095
 }
 
 nas.h.zfix.org {
-    import simple_https zfix-nas.internal:5001
+	import simple_https zfix-nas.internal:5001
 }
 
 netvisor.h.zfix.org {
-    import intranet
-    import simple netvisor.internal:60072
+	import intranet
+	import simple netvisor.internal:60072
 }
 
 prometheus.h.zfix.org {
-    import intranet
-    import simple prometheus.internal:9090
+	import intranet
+	import simple prometheus.internal:9090
 }
 
 prowlarr.h.zfix.org {
-    import intranet
-    import simple prowlarr.internal:9696
+	import intranet
+	import simple prowlarr.internal:9696
 }
 
 proxmox.h.zfix.org {
-    import intranet
-    import default
+	import intranet
+	import default
 
-    reverse_proxy * {
-        # to https://proxmox-1.internal:8006
-        to https://proxmox-2.internal:8006
-        # to https://proxmox-4.internal:8006
+	reverse_proxy * {
+		# to https://proxmox-1.internal:8006
+		to https://proxmox-2.internal:8006
+		# to https://proxmox-4.internal:8006
 
-        lb_policy ip_hash
-        lb_try_duration 500ms
-        lb_try_interval 250ms
+		lb_policy ip_hash
+		lb_try_duration 500ms
+		lb_try_interval 250ms
 
-        import tls_skip_verify
-    }
+		import tls_skip_verify
+	}
 }
 
 radarr.h.zfix.org {
-    import intranet
-    import simple radarr.internal:7878
+	import intranet
+	import simple radarr.internal:7878
 }
 
 searxng.h.zfix.org {
-    import intranet
-    import simple searxng.internal:8888
+	import intranet
+	import simple searxng.internal:8888
 }
 
 sonarr.h.zfix.org {
-    import intranet
-    import simple sonarr.internal:8989
+	import intranet
+	import simple sonarr.internal:8989
 }
 
 torrent.h.zfix.org {
-    import intranet
-    import simple qbittorrent.internal:8090
+	import intranet
+	import simple qbittorrent.internal:8090
 }
 
 ui.h.zfix.org {
-    import intranet
-    import simple_https 10.31.1.1:443
+	import intranet
+	import simple_https 10.31.1.1:443
 }
 
 wantflix.h.zfix.org {
-    import intranet
-    import simple jellyseerr.internal:5055
+	import intranet
+	import simple jellyseerr.internal:5055
 }
 
 zetflix.h.zfix.org {
-    import intranet
-    import simple jellyfin.internal:8096
+	import intranet
+	import simple jellyfin.internal:8096
 }

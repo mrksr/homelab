@@ -61,16 +61,16 @@
 	handle_errors {
 		header Content-Type text/html
 		respond <<HTML
-            <html lang="en">
-                <head>
-                    <title>{err.status_code}: {err.status_text}</title>
-                </head>
-                <body>
-                    <h1>{err.status_code}: {err.status_text}</h1>
-                    <p>{err.message}</p>
-                </body>
-            </html>
-        HTML {err.status_code}
+      <html lang="en">
+        <head>
+          <title>{err.status_code}: {err.status_text}</title>
+        </head>
+        <body>
+          <h1>{err.status_code}: {err.status_text}</h1>
+          <p>{err.message}</p>
+        </body>
+      </html>
+    HTML {err.status_code}
 	}
 }
 

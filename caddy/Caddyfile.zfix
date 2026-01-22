@@ -130,16 +130,16 @@
 	handle_errors {
 		header Content-Type text/html
 		respond <<HTML
-            <html lang="en">
-                <head>
-                    <title>{err.status_code}: {err.status_text}</title>
-                </head>
-                <body>
-                    <h1>{err.status_code}: {err.status_text}</h1>
-                    <p>{err.message}</p>
-                </body>
-            </html>
-        HTML {err.status_code}
+      <html lang="en">
+        <head>
+          <title>{err.status_code}: {err.status_text}</title>
+        </head>
+        <body>
+          <h1>{err.status_code}: {err.status_text}</h1>
+          <p>{err.message}</p>
+        </body>
+      </html>
+    HTML {err.status_code}
 	}
 }
 
@@ -218,11 +218,11 @@ headscale.zfix.org tailscale.zfix.org {
 	handle / {
 		header Content-Type text/html
 		respond <<HTML
-            <html><body>
-            <h1>zfix.org Tailscale VPN</h1>
-            <p>Connect via a Tailscale client. See the <a href="https://dash.zfix.org">zfix.org Dashboard</a> for details.</p>
-            </body></html>
-        HTML 200
+      <html><body>
+      <h1>zfix.org Tailscale VPN</h1>
+      <p>Connect via a Tailscale client. See the <a href="https://dash.zfix.org">zfix.org Dashboard</a> for details.</p>
+      </body></html>
+    HTML 200
 	}
 }
 

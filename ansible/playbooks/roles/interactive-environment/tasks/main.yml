@@ -17,6 +17,6 @@
       - mise
 - name: Setup and update chezmoi environment
   ansible.builtin.shell: |
-    mise exec chezmoi -- chezmoi init --promptString git_email=git@zfix.org,gh_pat={{ github_token }} mrksr
+    mise exec chezmoi -- chezmoi init --promptString "Git email address=git@zfix.org,Github PAT={{ github_token }}" mrksr
     mise exec chezmoi -- chezmoi update --force
   changed_when: true

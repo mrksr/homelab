@@ -184,7 +184,7 @@ books.zfix.org {
 	import simple booklore.internal:6060
 }
 
-dash.zfix.org {
+dash.zfix.org dashboard.zfix.org {
 	import auth_proxy
 	import simple homer.internal:8010
 }

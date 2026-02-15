@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+DISK_LOCATION=/var/lib/pve/local-btrfs
+
+find $DISK_LOCATION -path '**/*.raw' ! -path '*vzdump*' \
+    | xargs -I% btrfs property set % compression zstd
+
+find $DISK_LOCATION -path '**/*.raw' ! -path '*vzdump*' \
+    | xargs -I% btrfs filesystem defrag -v -czstd %

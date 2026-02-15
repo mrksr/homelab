@@ -1,0 +1,6 @@
+- name: Create btrfs-compression cronjob
+  become: true
+  ansible.builtin.copy:
+    src: mrksr-btrfs-compression
+    dest: /etc/cron.daily/mrksr-btrfs-compression
+    mode: 'u=rwx,go=rx'

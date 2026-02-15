@@ -5,6 +5,13 @@
   roles:
     - proxmox-apt
 
+- name: btrfs compression
+  hosts:
+    - home_nodes
+    - zfix_nodes
+  roles:
+    - btrfs-compression
+
 - name: Ensure interactive environment
   hosts:
     - home_nodes

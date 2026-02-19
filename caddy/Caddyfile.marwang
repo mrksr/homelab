@@ -241,6 +241,11 @@ wantflix.h.zfix.org {
 	import simple jellyseerr.internal:5055
 }
 
+wealthfolio.h.zfix.org {
+	import intranet
+	import simple wealthfolio.internal:8080
+}
+
 zetflix.h.zfix.org {
 	import intranet
 	import simple jellyfin.internal:8096

@@ -8,7 +8,6 @@ volumes:
   whatsapp_data: {}
   signal_bridge_data: {}
   signal_postgres_data: {}
-  eturnal_data: {}
 
 services:
   synapse:
@@ -121,22 +120,5 @@ services:
       - signal_postgres_data:/var/lib/postgresql/data
     networks:
       - synapse
-  eturnal:
-    image: ghcr.io/processone/eturnal:latest
-    container_name: eturnal
-    restart: unless-stopped
-    ports:
-      - 3478:3478/tcp
-      - 3478:3478/udp
-      - 50000-50500:50000-50500/udp
-    environment:
-      ETURNAL_RELAY_MIN_PORT: 50000
-      ETURNAL_RELAY_MAX_PORT: 50500
-      ETURNAL_ETC_DIR: "/eturnal_data"
-    volumes:
-      - eturnal_data:/eturnal_data
-    networks:
-      - synapse
-
 networks:
   synapse: {}

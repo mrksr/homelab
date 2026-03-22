@@ -1,5 +1,18 @@
 {
 	# debug
+
+	layer4 {
+		:33010 {
+			route {
+				proxy anytype-server.internal:33010
+			}
+		}
+		:33020 {
+			route {
+				proxy anytype-server.internal:33020
+			}
+		}
+	}
 }
 
 (tls_config) {
@@ -101,6 +114,12 @@
 		import tls_skip_verify
 		import default_proxy_settings
 	}
+}
+
+anytype.zfix.org {
+	import default
+
+	import simple anytype-server.internal:33010
 }
 
 asus.h.zfix.org {

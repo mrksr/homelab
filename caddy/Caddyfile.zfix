@@ -85,6 +85,18 @@
 				proxy zfix-nas.internal:6690
 			}
 		}
+
+		:33010 {
+			route {
+				proxy anytype-server.internal:33010
+			}
+		}
+
+		:33020 {
+			route {
+				proxy anytype-server.internal:33020
+			}
+		}
 	}
 }
 
@@ -170,6 +182,10 @@
 		import tls_skip_verify
 		import default_proxy_settings
 	}
+}
+
+anytype.zfix.org {
+	import simple anytype-server.internal:33010
 }
 
 audio.zfix.org {

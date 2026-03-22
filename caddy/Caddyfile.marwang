@@ -165,11 +165,6 @@ lidarr.h.zfix.org {
 	import simple lidarr.internal:8686
 }
 
-lounge.h.zfix.org {
-	import intranet
-	import simple the-lounge.internal:9000
-}
-
 music-assistant.h.zfix.org {
 	import intranet
 	import simple homeassistant.internal:8095
@@ -177,11 +172,6 @@ music-assistant.h.zfix.org {
 
 nas.h.zfix.org {
 	import simple_https zfix-nas.internal:5001
-}
-
-netvisor.h.zfix.org {
-	import intranet
-	import simple netvisor.internal:60072
 }
 
 prometheus.h.zfix.org {
@@ -216,14 +206,14 @@ radarr.h.zfix.org {
 	import simple radarr.internal:7878
 }
 
-searxng.h.zfix.org {
-	import intranet
-	import simple searxng.internal:8888
-}
-
 sonarr.h.zfix.org {
 	import intranet
 	import simple sonarr.internal:8989
+}
+
+sure.h.zfix.org {
+	import intranet
+	import simple sure.internal:3000
 }
 
 torrent.h.zfix.org {
@@ -239,11 +229,6 @@ ui.h.zfix.org {
 wantflix.h.zfix.org {
 	import intranet
 	import simple jellyseerr.internal:5055
-}
-
-wealthfolio.h.zfix.org {
-	import intranet
-	import simple wealthfolio.internal:8080
 }
 
 zetflix.h.zfix.org {

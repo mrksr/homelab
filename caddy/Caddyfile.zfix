@@ -209,6 +209,11 @@ git.zfix.org {
 	import simple forgejo.zfix:3000
 }
 
+git-mirror.zfix.org {
+	import auth_proxy
+	import simple gitea-mirror.zfix:4321
+}
+
 hassio.zfix.org hassio.h.zfix.org {
 	import default
 

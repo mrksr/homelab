@@ -14,6 +14,15 @@
   roles:
     - limit-journal-size
 
+- name: Regularly clean apt cache
+  hosts:
+    - home_nodes
+    - proxmox_home_all_lxc
+    - proxmox_zfix_all_lxc
+  gather_facts: true
+  roles:
+    - apt-clean-cronjob
+
 - name: Interactive environments for some hosts
   hosts:
     - caddy

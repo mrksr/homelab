@@ -1,0 +1,7 @@
+- name: Ensure a job that regularly cleans the apt cache
+  ansible.builtin.cron:
+    name: "clean apt cache"
+    job: "apt-get clean"
+    hour: "2"
+    minute: "37"
+  when: ansible_os_family == "Debian"

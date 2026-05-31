@@ -180,6 +180,10 @@ outline.h.zfix.org {
 	redir https://outline.zfix.org
 }
 
+komodo.h.zfix.org {
+	import simple komodo-marwang.internal:9120
+}
+
 lidarr.h.zfix.org {
 	import intranet
 	import simple lidarr.internal:8686

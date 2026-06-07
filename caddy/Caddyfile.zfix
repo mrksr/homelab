@@ -350,7 +350,7 @@ wantflix.zfix.org {
 	import simple jellyseerr.internal:5055
 }
 
-zfix.org mrksr.de drksr.de {
+zfix.org mrksr.de drksr.de www.zfix.org www.mrksr.de www.drksr.de {
 	import default
 
 	handle {

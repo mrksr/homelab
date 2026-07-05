@@ -198,6 +198,16 @@ nas.h.zfix.org {
 	import simple_https zfix-nas.internal:5001
 }
 
+n8n.h.zfix.org {
+	import intranet
+	import simple n8n.internal:5678
+}
+
+paperless-gpt.h.zfix.org {
+	import intranet
+	import simple paperless-gpt.internal:8080
+}
+
 prometheus.h.zfix.org {
 	import intranet
 	import simple prometheus.internal:9090

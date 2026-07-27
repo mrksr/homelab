@@ -91,7 +91,7 @@
 (default_proxy_settings) {
 	# Allow multiple upstream retries
 	lb_retries 3
-	lb_try_duration 5s
+	lb_try_duration 1s
 
 	# Keep pinging upstreams
 	# health_uri /
@@ -100,20 +100,39 @@
 	# health_follow_redirects
 }
 
-(simple) {
+(default_reverse_proxy) {
 	import default
 
-	reverse_proxy http://{args[0]} {
+	reverse_proxy /robots.txt {args[0]} {
 		import default_proxy_settings
+		{blocks.proxy_settings}
+
+		@notfound status 404
+		handle_response @notfound {
+			respond <<ROBOTS
+          User-agent: *
+          Allow: /
+        ROBOTS 200
+		}
+	}
+
+	reverse_proxy {args[0]} {
+		import default_proxy_settings
+		{blocks.proxy_settings}
 	}
 }
 
-(simple_https) {
-	import default
+(simple) {
+	import default_reverse_proxy http://{args[0]}
+}
 
-	reverse_proxy https://{args[0]} {
-		import tls_skip_verify
-		import default_proxy_settings
+(simple_https) {
+	import default_reverse_proxy https://{args[0]} {
+		proxy_settings {
+			transport http {
+				tls_insecure_skip_verify
+			}
+		}
 	}
 }
 

@@ -116,14 +116,10 @@
 	}
 }
 
-(tls_skip_verify) {
-	transport http {
-		tls_insecure_skip_verify
-	}
-}
-
 (auth_proxy) {
-	forward_auth http://oauth2-proxy.zfix:4180 {
+	@should_auth not path /robots.txt
+
+	forward_auth @should_auth http://oauth2-proxy.zfix:4180 {
 		uri /oauth2/auth
 
 		copy_headers X-Auth-Request-User X-Auth-Request-Email X-Auth-Request-Preferred-Username X-Auth-Request-Groups
@@ -158,7 +154,7 @@
 (default_proxy_settings) {
 	# Allow multiple upstream retries
 	lb_retries 3
-	lb_try_duration 5s
+	lb_try_duration 1s
 
 	# Keep pinging upstreams
 	# health_uri /
@@ -167,20 +163,39 @@
 	# health_follow_redirects
 }
 
-(simple) {
+(default_reverse_proxy) {
 	import default
 
-	reverse_proxy http://{args[0]} {
+	reverse_proxy /robots.txt {args[0]} {
 		import default_proxy_settings
+		{blocks.proxy_settings}
+
+		@notfound status 404
+		handle_response @notfound {
+			respond <<ROBOTS
+          User-agent: *
+          Allow: /
+        ROBOTS 200
+		}
+	}
+
+	reverse_proxy {args[0]} {
+		import default_proxy_settings
+		{blocks.proxy_settings}
 	}
 }
 
-(simple_https) {
-	import default
+(simple) {
+	import default_reverse_proxy http://{args[0]}
+}
 
-	reverse_proxy https://{args[0]} {
-		import tls_skip_verify
-		import default_proxy_settings
+(simple_https) {
+	import default_reverse_proxy https://{args[0]} {
+		proxy_settings {
+			transport http {
+				tls_insecure_skip_verify
+			}
+		}
 	}
 }
 
@@ -278,7 +293,6 @@ mail.zfix.org mail.mrksr.de mail.drksr.de autodiscover.zfix.org autoconfig.zfix.
 	}
 
 	reverse_proxy https://mailcow.internal:443 {
-		import tls_skip_verify
 		import default_proxy_settings
 
 		# NOTE(mrksr): The Host is used by mailcow for SoGo redirect.
@@ -366,6 +380,13 @@ zfix.org mrksr.de drksr.de www.zfix.org www.mrksr.de www.drksr.de {
 	handle /defaultsite {
 		# Fix for ourpc.de by Markus Schlaffer
 		redir https://zfix.org
+	}
+
+	handle /robots.txt {
+		respond <<ROBOTS
+        User-agent: *
+        Allow: /
+      ROBOTS 200
 	}
 
 	handle /_synapse/* {

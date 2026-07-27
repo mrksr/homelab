@@ -292,14 +292,17 @@ mail.zfix.org mail.mrksr.de mail.drksr.de autodiscover.zfix.org autoconfig.zfix.
 		max_size 128MB
 	}
 
-	reverse_proxy https://mailcow.internal:443 {
-		import default_proxy_settings
+	import default_reverse_proxy https://mailcow.internal:443 {
+		proxy_settings {
+			transport http {
+				tls_insecure_skip_verify
+			}
 
-		# NOTE(mrksr): The Host is used by mailcow for SoGo redirect.
-		# Need to set it to the correct outside hostname.
-		header_up Host {hostport}
-
-		flush_interval -1
+			# NOTE(mrksr): The Host is used by mailcow for SoGo redirect.
+			# Need to set it to the correct outside hostname.
+			header_up Host {hostport}
+			flush_interval -1
+		}
 	}
 }
 
@@ -353,10 +356,10 @@ status.zfix.org {
 	import default
 	import auth_proxy
 
-	reverse_proxy http://pulse.zfix:7655 {
-		import default_proxy_settings
-
-		header_up X-Proxy-Secret {env.PULSE_PROXY_SECRET}
+	import default_reverse_proxy http://pulse.zfix:7655 {
+		proxy_settings {
+			header_up X-Proxy-Secret {env.PULSE_PROXY_SECRET}
+		}
 	}
 }
 

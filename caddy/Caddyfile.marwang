@@ -57,7 +57,7 @@
 		static private_ranges fc00::/7 fe80::/10 100.64.0.0/10
 		list {
 			# Consumes the prefixes created by caddy-ipv6-prefixes.service
-			url http://localhost:6389/ipv6
+			url http://127.0.0.1:6389/ipv6
 			interval 10s
 			timeout 1s
 			retries 2

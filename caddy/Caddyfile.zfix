@@ -371,7 +371,7 @@ wantflix.zfix.org {
 	import simple jellyseerr.internal:5055
 }
 
-zfix.org mrksr.de drksr.de www.zfix.org www.mrksr.de www.drksr.de {
+zfix.org drksr.de www.zfix.org www.drksr.de {
 	import default
 
 	handle {
@@ -442,6 +442,23 @@ zfix.org mrksr.de drksr.de www.zfix.org www.mrksr.de www.drksr.de {
 
 	handle /.well-known/carddav {
 		redir https://mail.zfix.org/SOGo/dav/
+	}
+}
+
+mrksr.de www.mrksr.de {
+	import default
+
+	handle {
+		reverse_proxy http://komodo.zfix:3489 {
+			import default_proxy_settings
+		}
+	}
+
+	handle /robots.txt {
+		respond <<ROBOTS
+        User-agent: *
+        Allow: /
+      ROBOTS 200
 	}
 }
 

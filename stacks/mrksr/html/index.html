@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dr. Markus Kaiser — Machine Learning Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Libertinus Serif';
+    src: url('fonts/LibertinusSerif-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Libertinus Serif';
+    src: url('fonts/LibertinusSerif-Bold.woff2') format('woff2');
+    font-weight: 600 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Libertinus Serif';
+    src: url('fonts/LibertinusSerif-Italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Libertinus Serif';
+    src: url('fonts/LibertinusSerif-BoldItalic.woff2') format('woff2');
+    font-weight: 600 700;
+    font-style: italic;
+    font-display: swap;
+  }
+  body { margin: 0; background: #faf8f4; }
+  a { color: #2f5d43; text-decoration: none; border-bottom: 1px solid rgba(47,93,67,0.32); }
+  a:hover { color: #22452f; border-bottom-color: #22452f; }
+  @media (max-width: 640px) {
+    .page { padding-left: 20px !important; padding-right: 20px !important; }
+    header, #services, #focus, #engagements, #career, #publications, #impressum {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+    }
+    header > img {
+      grid-column: 1 !important;
+      grid-row: 1 !important;
+      margin-top: -48px !important;
+      width: 84px !important;
+      height: 84px !important;
+    }
+    header > div {
+      grid-row: 2 !important;
+      padding-top: 0 !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div style="background:#faf8f4;color:#1c1a17;font-family:'Libertinus Serif',Georgia,serif;font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased">
+<div style="width:100%;height:clamp(190px,24vw,300px);overflow:hidden;background:#2f5d43">
+  <img src="hero.jpg" alt="Glasshouse in the Cambridge University Botanic Garden" style="width:100%;height:100%;object-fit:cover;object-position:50% 42%;display:block">
+</div>
+<div class="page" style="max-width:920px;margin:0 auto;padding:0 40px 96px;display:flex;flex-direction:column;gap:72px">
+
+  <header style="display:grid;grid-template-columns:1fr 104px;gap:32px;align-items:start">
+    <img src="portrait.jpg" alt="Portrait of Markus Kaiser" style="grid-column:2;grid-row:1;width:104px;height:104px;border-radius:50%;object-fit:cover;margin-top:-52px;border:4px solid #faf8f4;box-shadow:0 1px 3px rgba(28,26,23,0.12)">
+    <div style="grid-column:1;grid-row:1;display:flex;flex-direction:column;gap:20px;padding-top:36px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#2f5d43">Machine learning research &amp; consulting</div>
+      <h1 style="margin:0;font-size:48px;line-height:1.1;font-weight:600;letter-spacing:-0.015em">Dr. Markus Kaiser</h1>
+      <p style="margin:0;font-size:23px;line-height:1.45;color:#3b372f;max-width:34em;text-wrap:pretty">Machine learning for engineering, science, and healthcare. I advise on feasibility, strategy, and technical execution, build the prototypes that show whether an idea holds, and help design research teams and select the people for them.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:20px;font-family:'IBM Plex Mono',monospace;font-size:13px;padding-top:4px">
+        <a href="#services">Services</a>
+        <a href="#focus">Focus</a>
+        <a href="#engagements">Engagements</a>
+        <a href="#career">Employment</a>
+        <a href="#publications">Publications</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="services" style="display:grid;grid-template-columns:150px 1fr;gap:40px">
+    <h2 style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#2f5d43;padding-top:6px">Services</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:32px 40px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <h3 style="margin:0;font-size:21px;font-weight:600">Feasibility assessment</h3>
+        <p style="margin:0;color:#413c34;text-wrap:pretty">An independent scientific judgement on whether a machine learning approach can solve a given problem, what data it requires, and where the method will fail.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <h3 style="margin:0;font-size:21px;font-weight:600">Strategy and roadmaps</h3>
+        <p style="margin:0;color:#413c34;text-wrap:pretty">Research direction, method selection, and the sequence of experiments and infrastructure needed to get from a question to a deployed system.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <h3 style="margin:0;font-size:21px;font-weight:600">Prototypes and models</h3>
+        <p style="margin:0;color:#413c34;text-wrap:pretty">Working prototypes developed on my own account: surrogate models, optimisation loops, and probabilistic models, documented so that a team can take them further.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <h3 style="margin:0;font-size:21px;font-weight:600">Research teams</h3>
+        <p style="margin:0;color:#413c34;text-wrap:pretty">Helping early-stage companies define research roles, assess candidates, and structure a machine learning team around the problem they actually have.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="focus" style="display:grid;grid-template-columns:150px 1fr;gap:40px">
+    <h2 style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#2f5d43;padding-top:6px">Focus</h2>
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <p style="margin:0;font-size:22px;line-height:1.5;max-width:38em;text-wrap:pretty">My work concerns physical systems, where data is expensive, simulations are slow, and a prediction without an honest uncertainty is of little use. Ten years of research and industrial practice in probabilistic machine learning inform how I approach these problems. More recently my research has moved to large language models, in particular post-training and the use of LLM judges and uncertainty quantification for evaluation.</p>
+      <ul style="margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0 32px;border-top:1px solid #e0dad0">
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">ML strategy</li>
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">Research team design</li>
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">Hiring and technical assessment</li>
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">LLM post-training</li>
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">LLM judges and evaluation</li>
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">LLM steering</li>
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">Surrogate modelling and emulation</li>
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">(Deep) Gaussian processes</li>
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">Bayesian neural networks</li>
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">Bayesian optimisation</li>
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">Reinforcement learning under uncertainty</li>
+        <li style="padding:12px 0;border-bottom:1px solid #e0dad0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#413c34">Simulation and data infrastructure</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="engagements" style="display:grid;grid-template-columns:150px 1fr;gap:40px">
+    <h2 style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#2f5d43;padding-top:6px">Selected engagements</h2>
+    <div style="display:flex;flex-direction:column">
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:24px;padding:20px 0;border-top:1px solid #e0dad0">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#856214;padding-top:3px">2026</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <h3 style="margin:0;font-size:21px;font-weight:600">US corporate, industrial machine learning</h3>
+          <p style="margin:0;color:#413c34;text-wrap:pretty">Assessment of the relevance and applicability of machine learning to a specific scientific and technical application, including the state of the research literature and what it would take to adopt it.</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:24px;padding:20px 0;border-top:1px solid #e0dad0">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#856214;padding-top:3px">2025</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <h3 style="margin:0;font-size:21px;font-weight:600">Early-stage healthcare startup, Charité accelerator, Berlin</h3>
+          <p style="margin:0;color:#413c34;text-wrap:pretty">Feasibility study for a clinical machine learning product developed with Charité Berlin, followed by a machine learning strategy and a growth plan for the research team.</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:24px;padding:20px 0;border-top:1px solid #e0dad0;border-bottom:1px solid #e0dad0">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#856214;padding-top:3px">2022</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <h3 style="margin:0;font-size:21px;font-weight:600">Early-stage design automation startup, Cambridge</h3>
+          <p style="margin:0;color:#413c34;text-wrap:pretty">Feasibility study with working prototypes for automated engineering design, and a machine learning roadmap covering methods, data, and compute.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="career" style="display:grid;grid-template-columns:150px 1fr;gap:40px">
+    <h2 style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#2f5d43;padding-top:6px;line-height:1.5">Employment<br>&amp; education</h2>
+    <div style="display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;flex-direction:column">
+        <div style="display:grid;grid-template-columns:110px 1fr;gap:24px;padding:16px 0;border-top:1px solid #e0dad0">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#856214;padding-top:3px">since 2026</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <h3 style="margin:0;font-size:20px;font-weight:600">Research Manager, industrial machine learning</h3>
+            <p style="margin:0;color:#413c34;text-wrap:pretty">Leading an LLM post-training research team.</p>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:110px 1fr;gap:24px;padding:16px 0;border-top:1px solid #e0dad0">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#856214;padding-top:3px">2024–2025</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <h3 style="margin:0;font-size:20px;font-weight:600">AI Lead · Proxima Fusion, Munich</h3>
+            <p style="margin:0;color:#413c34;text-wrap:pretty">Built and led a team of six for data, cloud, and machine learning. Defined the Physical AI and data strategy, established data-driven stellarator design using large-scale Pareto search, and published the largest public QI stellarator dataset with more than 300,000 designs.</p>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:110px 1fr;gap:24px;padding:16px 0;border-top:1px solid #e0dad0">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#856214;padding-top:3px">2022–2024</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <h3 style="margin:0;font-size:20px;font-weight:600">Head of Optimisation · Monumo, Cambridge</h3>
+            <p style="margin:0;color:#413c34;text-wrap:pretty">First machine learning hire at a seed-stage company automating the design of electric motors; grew the group to five researchers and embedded image-based surrogates and Gaussian process optimisation into the simulation workflow.</p>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:110px 1fr;gap:24px;padding:16px 0;border-top:1px solid #e0dad0">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#856214;padding-top:3px">2021–2022</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <h3 style="margin:0;font-size:20px;font-weight:600">Research Associate · Computer Laboratory, University of Cambridge</h3>
+            <p style="margin:0;color:#413c34;text-wrap:pretty">Real-world machine learning. Established a collaboration with the British Antarctic Survey on emulation of ice-sheet models for extreme sea-level rise, leading to five publications.</p>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:110px 1fr;gap:24px;padding:16px 0;border-top:1px solid #e0dad0;border-bottom:1px solid #e0dad0">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#856214;padding-top:3px">2018–2022</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <h3 style="margin:0;font-size:20px;font-weight:600">Research Scientist · Siemens AG, Munich</h3>
+            <p style="margin:0;color:#413c34;text-wrap:pretty">Bayesian optimisation for gas turbine blade designs, saving more than 100 kilotonnes of CO₂ through efficiency gains, and reinforcement learning for gas and wind turbine controllers.</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:grid;grid-template-columns:110px 1fr;gap:24px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#856214">2021</div>
+          <div>Doctorate in Computer Science, Technical University of Munich. <em style="color:#413c34">Structured Models with Gaussian Processes.</em></div>
+        </div>
+        <div style="display:grid;grid-template-columns:110px 1fr;gap:24px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#856214">2017</div>
+          <div>M.Sc. in Computer Science, KTH Stockholm. ERASMUS double degree, grade 1.0.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:110px 1fr;gap:24px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#856214">2016</div>
+          <div>M.Sc. in Computer Science, Technical University of Munich. Grade 1.0, with high distinction.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="publications" style="display:grid;grid-template-columns:150px 1fr;gap:40px">
+    <h2 style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#2f5d43;padding-top:6px">Selected publications</h2>
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:24px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#856214;padding-top:4px">2025<br>NeurIPS</div>
+        <div><span style="font-weight:600">ConStellaration: A dataset of QI-like stellarator plasma boundaries and optimisation benchmarks.</span> <span style="color:#5c554a">S. Cadena, A. Merlo, E. Laude, A. Bauer, A. Agrawal, …, S. Hudson, M. Kaiser.</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:24px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#856214;padding-top:4px">2025<br>Fus. Eng. Des.</div>
+        <div><span style="font-weight:600">Stellaris: A high-field quasi-isodynamic stellarator for a prototypical fusion power plant.</span> <span style="color:#5c554a">J. Lion, J.-C. Anglès, L. Bonauer, …, M. Kaiser, …, M. Zheng.</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:24px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#856214;padding-top:4px">2024<br>Nature Comm.</div>
+        <div><span style="font-weight:600">Calculations of extreme sea level rise scenarios are strongly dependent on ice sheet model resolution.</span> <span style="color:#5c554a">C. Williams, P. Thodoroff, R. Arthern, J. Byrne, S. Hosking, M. Kaiser, N. Lawrence, I. Kazlauskaite.</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:24px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#856214;padding-top:4px">2020<br>ICML</div>
+        <div><span style="font-weight:600">Modulated Bayesian Optimisation using Latent Gaussian Process Models.</span> <span style="color:#5c554a">E. Bodin, M. Kaiser, I. Kazlauskaite, Z. Dai, N. Campbell, C. H. Ek.</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:24px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#856214;padding-top:4px">2020<br>UAI</div>
+        <div><span style="font-weight:600">Compositional uncertainty in deep Gaussian processes.</span> <span style="color:#5c554a">I. Ustyuzhaninov, I. Kazlauskaite, M. Kaiser, E. Bodin, N. Campbell, C. H. Ek.</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:24px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#856214;padding-top:4px">2019<br>ECML</div>
+        <div><span style="font-weight:600">Data Association with Gaussian Processes.</span> <span style="color:#5c554a">M. Kaiser, C. Otte, T. Runkler, C. H. Ek.</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:24px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#856214;padding-top:4px">2018<br>NeurIPS</div>
+        <div><span style="font-weight:600">Bayesian Alignments of Warped Multi-Output Gaussian Processes.</span> <span style="color:#5c554a">M. Kaiser, C. Otte, T. Runkler, C. H. Ek.</span></div>
+      </div>
+      <p style="margin:8px 0 0;color:#5c554a">29 publications and patents in total. The full list is on <a href="https://scholar.google.de/citations?user=_WlQuG0AAAAJ&hl=en">Google Scholar</a>.</p>
+    </div>
+  </section>
+
+  <section id="contact" style="display:grid;grid-template-columns:150px 1fr;gap:40px">
+    <h2 style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#2f5d43;padding-top:6px">Contact</h2>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <p style="margin:0;font-size:24px;line-height:1.4;max-width:24em;text-wrap:pretty">Do get in touch. Tell me a little about the problem you are working on and we can have a chat about it.</p>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:16px"><a href="mailto:consulting@mrksr.de">consulting@mrksr.de</a></div>
+      <div style="display:flex;flex-wrap:wrap;gap:18px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5c554a">
+        <a href="https://www.linkedin.com/in/mrksr/">LinkedIn</a>
+        <a href="https://github.com/mrksr">GitHub</a>
+        <a href="https://orcid.org/0000-0003-0557-9755">ORCID</a>
+        <a href="https://scholar.google.de/citations?user=_WlQuG0AAAAJ&hl=en">Google Scholar</a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="impressum" style="display:grid;grid-template-columns:150px 1fr;gap:40px;border-top:1px solid #e0dad0;padding-top:32px">
+    <h2 style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#2f5d43;padding-top:4px;line-height:1.5">Impressum<br>Legal notice</h2>
+    <div style="display:flex;flex-direction:column;gap:20px;font-size:15px;color:#5c554a;max-width:44em">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px">
+        <div>
+          <div style="font-weight:600;color:#1c1a17;margin-bottom:6px">Provider (Angaben gemäß § 5 DDG)</div>
+          Dr. Markus Kaiser<br>Kreuzstr. 7<br>83355 Grabenstätt<br>Germany
+        </div>
+        <div>
+          <div style="font-weight:600;color:#1c1a17;margin-bottom:6px">Contact</div>
+          Email: <a href="mailto:consulting@mrksr.de">consulting@mrksr.de</a><br>Website: www.mrksr.de
+        </div>
+        <div>
+          <div style="font-weight:600;color:#1c1a17;margin-bottom:6px">Activity</div>
+          Freelance scientific and consulting work in the field of machine learning (freiberufliche Tätigkeit).<br>Responsible for the content: Dr. Markus Kaiser, address as above.
+        </div>
+      </div>
+      <p style="margin:0;text-wrap:pretty">The European Commission provides a platform for online dispute resolution: <a href="https://ec.europa.eu/consumers/odr/">ec.europa.eu/consumers/odr</a>. I am neither obliged nor willing to participate in dispute resolution proceedings before a consumer arbitration body.</p>
+      <p style="margin:0;text-wrap:pretty">This website collects no personal data and sets no cookies. Data submitted by email is used solely to respond to the enquiry.</p>
+      <p style="margin:0;text-wrap:pretty">Header photograph: Chris Cooper / Unsplash.</p>
+    </div>
+  </footer>
+
+</div>
+</div>
+</body>
+</html>

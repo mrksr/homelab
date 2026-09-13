@@ -264,6 +264,11 @@ sonarr.h.zfix.org {
 	import simple sonarr.internal:8989
 }
 
+solar.h.zfix.org {
+	import intranet
+	import simple_https kaiser.internal:443
+}
+
 sure.h.zfix.org {
 	import intranet
 	import simple sure.internal:3000
@@ -276,12 +281,17 @@ torrent.h.zfix.org {
 
 ui.h.zfix.org {
 	import intranet
-	import simple_https 10.31.1.1:443
+	import simple_https 10.31.101.1:443
 }
 
 wantflix.h.zfix.org {
 	import intranet
 	import simple jellyseerr.internal:5055
+}
+
+wealthfolio.h.zfix.org {
+	import intranet
+	import simple wealthfolio.internal:8080
 }
 
 zetflix.h.zfix.org {

@@ -385,6 +385,12 @@ zfix.org drksr.de www.zfix.org www.drksr.de {
 		redir https://zfix.org
 	}
 
+	@bootstrap_script path_regexp ^/(bootstrap|bs)$
+	handle @bootstrap_script {
+		rewrite /mrksr/dotfiles/refs/heads/master/install.sh
+		reverse_proxy https://raw.githubusercontent.com
+	}
+
 	handle /robots.txt {
 		respond <<ROBOTS
         User-agent: *

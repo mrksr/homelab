@@ -242,9 +242,9 @@ proxmox.h.zfix.org {
 	import default
 
 	reverse_proxy * {
-		# to https://proxmox-1.internal:8006
+		to https://proxmox.internal:8006
 		to https://proxmox-2.internal:8006
-		# to https://proxmox-4.internal:8006
+		to https://proxmox-4.internal:8006
 
 		lb_policy ip_hash
 		lb_try_duration 500ms
@@ -282,17 +282,10 @@ torrent.h.zfix.org {
 ui.h.zfix.org {
 	import intranet
 
-	import default_reverse_proxy https://10.31.101.1:443 {
-		proxy_settings {
-			transport http {
-				tls_insecure_skip_verify
-				versions 1.1
-			}
+	reverse_proxy https://10.31.101.1:443 {
+		transport http {
+			tls_insecure_skip_verify
 		}
-
-		flush_interval -1
-		header_up Origin ""
-		header_up -Referer
 		header_up Host {hostport}
 	}
 }

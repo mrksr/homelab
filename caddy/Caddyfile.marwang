@@ -300,6 +300,11 @@ wealthfolio.h.zfix.org {
 	import simple wealthfolio.internal:8080
 }
 
+youtarr.h.zfix.org {
+	import intranet
+	import simple youtarr.internal:3011
+}
+
 zetflix.h.zfix.org {
 	import intranet
 	import simple jellyfin.internal:8096

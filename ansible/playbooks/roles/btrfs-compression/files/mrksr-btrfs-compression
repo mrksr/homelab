@@ -4,8 +4,9 @@ set -e
 
 DISK_LOCATION=/var/lib/pve/local-btrfs
 
-find $DISK_LOCATION -path '**/*.raw' ! -path '*vzdump*' \
-    | xargs -I% btrfs property set % compression zstd
-
-find $DISK_LOCATION -path '**/*.raw' ! -path '*vzdump*' \
-    | xargs -I% btrfs filesystem defrag -v -czstd %
+find "$DISK_LOCATION" -name '*.raw' ! -path '*vzdump*' | while read -r f; do
+  if [ "$(btrfs property get "$f" compression)" != "compression=zstd" ]; then
+    btrfs property set "$f" compression zstd
+    ionice -c3 nice -n19 btrfs filesystem defrag -czstd "$f"
+  fi
+done

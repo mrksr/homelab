@@ -1,0 +1,31 @@
+# Komodo stack: syncs <name>.internal rewrites in AdGuard Home. Set the variables in the stack's environment
+# (see config.example.env); optional ones fall back to the defaults in update_dns.py.
+services:
+  update-dns:
+    build: .
+    restart: unless-stopped
+    environment:
+      - DOMAIN
+      - UNIFI_URL
+      - UNIFI_USER
+      - UNIFI_PASS
+      - AG_URL
+      - AG_USER
+      - AG_PASS
+      - PVE_URL
+      - PVE_TOKEN_ID
+      - PVE_TOKEN_SECRET
+      - PVE_VERIFY_TLS
+      - NTFY_URL
+      - NTFY_TOKEN
+      - GRACE_SECONDS
+      - MAX_REMOVALS
+      - INTERVAL
+      - INCLUDE_IPV6
+      - VLAN_ORDER
+      - PVE_MAC_PREFIXES
+    volumes:
+      - state:/data
+
+volumes:
+  state:

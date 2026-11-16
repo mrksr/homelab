@@ -181,6 +181,18 @@ grafana.h.zfix.org {
 	import simple grafana.internal:3000
 }
 
+grist.h.zfix.org {
+	handle /auth/login {
+		import auth_proxy
+	}
+
+	handle /auth/logout {
+		redir * https://auth-proxy.zfix.org/oauth2/sign_out?rd={scheme}://{host}/signed-out
+	}
+
+	import simple grist.internal:8484
+}
+
 # NOTE(mrksr): Also serve for hassio.zfix.org for intranet DNS rewrite
 hassio.zfix.org hassio.h.zfix.org {
 	import default
